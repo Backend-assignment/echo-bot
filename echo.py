@@ -14,7 +14,8 @@ def get_updates():
 def send_message(chat_id, text):
     parameters = {
         "chat_id": chat_id,
-        "text": text
+        "text": text,
+        "parse_mode": "HTML"
     }
 
     r = requests.get(f"{base_url}/sendMessage", params=parameters)
@@ -33,9 +34,14 @@ while True:
     text = last_msg['message']['text']
 
     print(last_message_id, message_id)
+
     if last_message_id != message_id:
         
-        send_message(chat_id, text)
+        if text == '/start':
+            
+            send_message(chat_id, "Welcome to Echo Bot!")
+        else:
+            send_message(chat_id, text)
 
         last_message_id = message_id
     
